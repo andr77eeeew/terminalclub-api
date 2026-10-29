@@ -1,0 +1,19 @@
+[project]
+name = "terminalclub-api"
+version = "0.1.0"
+description = "Backend for TerminalClub Site"
+readme = "README.md"
+authors = [
+    { name = "Andrii Demchuk" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.28,<0.12.0"]
+build-backend = "uv_build"
