@@ -1,2 +1,5 @@
+import importlib
+
+
 def test_package() -> None:
-    import terminalclub_api
+    importlib.import_module("terminalclub_api")
