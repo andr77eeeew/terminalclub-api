@@ -11,7 +11,28 @@ dependencies = []
 
 [dependency-groups]
 dev = [
+    "mypy>=2.4.1",
     "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]
+
+[tool.mypy]
+
+# Enables all strict checks (disallows functions without type annotations, strict Optional, etc.)
+strict = true
+
+# Improves the readability of errors in the terminal
+pretty = true
+
+files = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle (style errors)
+    "F",       # Pyflakes (logic and import errors)
+    "I",          # isort (import sorting)
+    "B", # flake8-bugbear (finding latent bugs)
+    "UP",    # pyupgrade (upgrading syntax to newer Python versions)
 ]
 
 [build-system]
