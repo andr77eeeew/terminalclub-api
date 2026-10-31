@@ -10,7 +10,7 @@ height="32" style="vertical-align: middle;">
 Backend service for terminal command trainer:
 type bash, git and other commands for speed and from memory.
 
-> Early Stage: project structure only, no features yet.
+> Early Stage: application skeleton with a health check endpoint, no features yet.
 
 Site: https://terminalclub.pages.dev
 
@@ -29,6 +29,26 @@ Run tests:
 ```bash
 uv run pytest
 ```
+
+Run the development server:
+
+```bash
+uv run uvicorn terminalclub_api.main:create_app --factory --reload
+```
+
+- `--factory` — `create_app` is an application factory, so uvicorn calls it to get the app
+- `--reload` — restarts the server on code changes (development only)
+
+The server starts at http://127.0.0.1:8000.
+
+Check that it's running:
+
+```bash
+curl http://127.0.0.1:8000/health
+# {"status":"ok"}
+```
+
+Interactive API docs: http://127.0.0.1:8000/docs
 
 ## Code Quality
 
@@ -78,13 +98,14 @@ The files checked by mypy are configured in `pyproject.toml`.
 
 Pre-commit automatically runs all configured checks before each Git commit.
 
-Install the Git hook tool for uv:
+Install pre-commit as a uv tool:
 
 ```bash
 uv tool install pre-commit
 ```
 
-Install pre commit hook:
+Set up the Git hooks:
+
 ```bash
 pre-commit install
 ```
@@ -92,7 +113,7 @@ pre-commit install
 Run all checks manually across the entire repository:
 
 ```bash
-uv run pre-commit run --all-files
+pre-commit run --all-files
 ```
 
 Once installed, the hooks run automatically when creating a commit. A commit will be blocked if any check fails.
