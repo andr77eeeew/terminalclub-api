@@ -7,10 +7,15 @@ authors = [
     { name = "Andrii Demchuk" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "fastapi>=0.162.0",
+    "pydantic>=2.14.2",
+    "uvicorn[standard]>=0.54.0",
+]
 
 [dependency-groups]
 dev = [
+    "httpx2>=2.16.0",
     "mypy>=2.4.1",
     "pytest>=9.2.0",
     "ruff>=0.17.3",
@@ -28,11 +33,11 @@ files = ["src", "tests"]
 
 [tool.ruff.lint]
 select = [
-    "E",    # pycodestyle (style errors)
-    "F",       # Pyflakes (logic and import errors)
-    "I",          # isort (import sorting)
-    "B", # flake8-bugbear (finding latent bugs)
-    "UP",    # pyupgrade (upgrading syntax to newer Python versions)
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
 ]
 
 [build-system]
