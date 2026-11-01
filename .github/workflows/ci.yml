@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2  # v10.3.3
+        with:
+          enable-cache: true
+
+      - name: Install dependencies (fails if uv.lock is outdated)
+        run: uv sync --locked
+
+      - name: Install pre-commit
+        run: uv tool install pre-commit==4.7.0
+
+      - name: Trailing whitespace
+        run: pre-commit run trailing-whitespace --all-files --show-diff-on-failure
+
+      - name: End of file
+        run: pre-commit run end-of-file-fixer --all-files --show-diff-on-failure
+
+      - name: YAML
+        run: pre-commit run check-yaml --all-files
+
+      - name: Ruff lint
+        run: pre-commit run ruff-check --all-files
+
+      - name: Ruff format
+        run: pre-commit run ruff-format-check --all-files
+
+      - name: Mypy
+        run: pre-commit run mypy --all-files
+
+      - name: Pytest
+        run: uv run pytest
