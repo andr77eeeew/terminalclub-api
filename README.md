@@ -6,6 +6,7 @@ height="32" style="vertical-align: middle;">
 
 [![Python Version](https://img.shields.io/badge/python-3.14%2B-blue)](https://www.python.org)
 ![GitHub License](https://img.shields.io/github/license/andr77eeeew/terminalclub-api)
+[![CI](https://github.com/andr77eeeew/terminalclub-api/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/andr77eeeew/terminalclub-api/actions/workflows/ci.yml)
 
 Backend service for terminal command trainer:
 type bash, git and other commands for speed and from memory.
