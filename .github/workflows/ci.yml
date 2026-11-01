@@ -17,30 +17,41 @@ concurrency:
 
 jobs:
   checks:
-    name: checks
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7.0.1
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v10.3.3
         with:
           enable-cache: true
 
-      - name: Install dependencies (falls if uv.lock is outdated)
+      - name: Install dependencies (fails if uv.lock is outdated)
         run: uv sync --locked
 
+      - name: Install pre-commit
+        run: uv tool install pre-commit==4.7.0
+
+      - name: Trailing whitespace
+        run: pre-commit run trailing-whitespace --all-files --show-diff-on-failure
+
+      - name: End of file
+        run: pre-commit run end-of-file-fixer --all-files --show-diff-on-failure
+
+      - name: YAML
+        run: pre-commit run check-yaml --all-files
+
       - name: Ruff lint
-        run: uv run ruff check
+        run: pre-commit run ruff-check --all-files
 
       - name: Ruff format
-        run: uv run ruff format --check
+        run: pre-commit run ruff-format-check --all-files
 
       - name: Mypy
-        run: uv run mypy
+        run: pre-commit run mypy --all-files
 
       - name: Pytest
         run: uv run pytest
