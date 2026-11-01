@@ -28,6 +28,14 @@ uv self update 0.13.6
 
 `uv self update` works if uv was installed with the official installer. If you installed it via pip, winget, Homebrew etc., update it through the same tool.
 
+## Configuration
+
+Settings are read from environment variables with the `TERMINALCLUB_` prefix or from a `.env` file in the current working directory (run commands from the project root). See `.env.example`.
+
+| Variable | Description | Default |
+|---|---|---|
+| `TERMINALCLUB_DOCS_ENABLED` | Serve API docs at `/docs`, `/redoc` and `/openapi.json` | `false` |
+
 ## Development
 
 Install dependencies:
@@ -38,6 +46,12 @@ uv sync
 Run tests:
 ```bash
 uv run pytest
+```
+
+Create a local config from the example:
+
+```bash
+cp .env.example .env
 ```
 
 Run the development server:
@@ -58,7 +72,7 @@ curl http://127.0.0.1:8000/health
 # {"status":"ok"}
 ```
 
-Interactive API docs: http://127.0.0.1:8000/docs
+Interactive API docs: http://127.0.0.1:8000/docs (only when `TERMINALCLUB_DOCS_ENABLED=true`, see [Configuration](#configuration))
 
 ## Code Quality
 
