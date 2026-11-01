@@ -17,7 +17,16 @@ Site: https://terminalclub.pages.dev
 
 ## Requirements
 
-- [uv](https://docs.astral.sh/uv/) — installs the right Python version by itself
+- [uv](https://docs.astral.sh/uv/) **0.13.6** — pinned via `required-version` in `pyproject.toml`; a different version will refuse to run. Installs the right Python version by itself.
+
+Check your version and update if needed:
+
+```bash
+uv --version
+uv self update 0.13.6
+```
+
+`uv self update` works if uv was installed with the official installer. If you installed it via pip, winget, Homebrew etc., update it through the same tool.
 
 ## Development
 
@@ -102,7 +111,7 @@ Pre-commit automatically runs all configured checks before each Git commit.
 Install pre-commit as a uv tool:
 
 ```bash
-uv tool install pre-commit
+uv tool install pre-commit==4.7.0
 ```
 
 Set up the Git hooks:
