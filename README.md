@@ -32,18 +32,20 @@ uv self update 0.13.6
 
 Settings are read from environment variables with the `TERMINALCLUB_` prefix or from a `.env` file in the current working directory (run commands from the project root). See `.env.example`.
 
-| Variable | Description | Default |
-|---|---|---|
+| Variable                    | Description                                             | Default |
+| --------------------------- | ------------------------------------------------------- | ------- |
 | `TERMINALCLUB_DOCS_ENABLED` | Serve API docs at `/docs`, `/redoc` and `/openapi.json` | `false` |
 
 ## Development
 
 Install dependencies:
+
 ```bash
 uv sync
 ```
 
 Run tests:
+
 ```bash
 uv run pytest
 ```
@@ -73,6 +75,34 @@ curl http://127.0.0.1:8000/health
 ```
 
 Interactive API docs: http://127.0.0.1:8000/docs (only when `TERMINALCLUB_DOCS_ENABLED=true`, see [Configuration](#configuration))
+
+## Docker
+
+Build the image:
+
+```bash
+docker build -t terminalclub-api .
+```
+
+Run it:
+
+```bash
+docker run --rm -p 8000:8000 terminalclub-api
+```
+
+The app listens on port 8000 inside the container; `-p 8000:8000` publishes it on the host. Check: http://127.0.0.1:8000/health
+
+Settings are passed as environment variables (see [Configuration](#configuration)). The image doesn't contain `.env`.
+
+```bash
+# a single variable
+docker run --rm -p 8000:8000 -e TERMINALCLUB_DOCS_ENABLED=true terminalclub-api
+
+# or all variables from a file
+docker run --rm -p 8000:8000 --env-file .env terminalclub-api
+```
+
+`docker ps` shows the container as `(healthy)` once `/health` responds.
 
 ## Code Quality
 
